@@ -30,9 +30,3 @@ This project is an interactive dashboard that tracks key **economic indicators**
 
 ### ✅ Phase 4: Deployment
 - [ ] Deploy on **AWS/GCP** for public access.
-
-## 📂 Setup Instructions
-### 1️⃣ Clone the Repository
-```bash
-git clone https://github.com/yourusername/global-economic-dashboard.git
-cd global-economic-dashboard
