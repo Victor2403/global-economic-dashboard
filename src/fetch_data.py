@@ -1,5 +1,3 @@
-print("🚀 Script started!")  # Add this at the very top
-
 import requests
 import pandas as pd
 import os  # Added for path checking
