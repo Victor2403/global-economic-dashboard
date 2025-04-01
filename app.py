@@ -1,57 +1,56 @@
 import dash
 from dash import dcc, html
-from dash.dependencies import Input, Output
 import pandas as pd
 import plotly.express as px
+from dash.dependencies import Input, Output
 
-# Load data
+# Load GDP data
 df = pd.read_csv("gdp_data.csv")
 
-# Get unique countries
-countries = df["Country"].unique()
+# Extract unique country names for dropdown
+available_countries = df["Country"].unique()
 
-# Initialize app
+# Initialize Dash app
 app = dash.Dash(__name__)
 
-# Layout
 app.layout = html.Div([
-    html.H1("Global GDP Dashboard", style={'textAlign': 'center'}),
-    
+    html.H1("🌍 Global GDP Dashboard", style={"textAlign": "center"}),
+
     # Dropdown for country selection
-    html.Label("Select a country:"),
     dcc.Dropdown(
-        id='country-dropdown',
-        options=[{'label': country, 'value': country} for country in countries],
-        value='United States',
+        id="country-selector",
+        options=[{"label": country, "value": country} for country in available_countries],
+        value="United States",  # Default value
         clearable=False
     ),
-    
-    # Line chart
-    dcc.Graph(id='gdp-line-chart'),
-    
-    # Bar chart
-    dcc.Graph(id='gdp-bar-chart')
+
+    # Graph
+    dcc.Graph(id="gdp-graph"),
 ])
 
-# Callbacks for interactivity
+# Callback to update graph based on selected country
 @app.callback(
-    [Output('gdp-line-chart', 'figure'), Output('gdp-bar-chart', 'figure')],
-    [Input('country-dropdown', 'value')]
+    Output("gdp-graph", "figure"),
+    Input("country-selector", "value")
 )
-def update_graphs(selected_country):
-    filtered_df = df[df['Country'] == selected_country]
-    
-    line_fig = px.line(
-        filtered_df, x='Year', y='GDP (USD)', 
-        title=f"GDP Growth of {selected_country}", markers=True
-    )
-    
-    bar_fig = px.bar(
-        filtered_df, x='Year', y='GDP (USD)', 
-        title=f"Yearly GDP of {selected_country}"
-    )
-    
-    return line_fig, bar_fig
+def update_graph(selected_country):
+    filtered_df = df[df["Country"] == selected_country]
 
+    fig = px.line(
+        filtered_df,
+        x="Year",
+        y="GDP (USD)",
+        title=f"{selected_country} GDP Over Time",
+        markers=True
+    )
+    fig.update_layout(
+        xaxis_title="Year",
+        yaxis_title="GDP (USD)",
+        template="plotly_dark"  # You can change themes later
+    )
+
+    return fig
+
+# Run the app
 if __name__ == "__main__":
     app.run(debug=True)
