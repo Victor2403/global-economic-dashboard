@@ -26,7 +26,7 @@ country_colors = {country: color_palette[i % len(color_palette)] for i, country 
 app = dash.Dash(__name__)
 
 # =============================================
-# Improved Forecasting Function
+# Forecasting Function
 # =============================================
 def forecast_gdp(country_data, forecast_periods=5):
     try:
@@ -55,7 +55,7 @@ app.layout = html.Div(
                 "fontFamily": "Escrow, serif",
                 "fontSize": "48px",
                 "fontWeight": "300",
-                "color": "#006400",
+                "color": "#003300",
                 "textAlign": "left",
                 "marginBottom": "20px",
                 "letterSpacing": "0.5px",
@@ -160,7 +160,7 @@ def update_graph(selected_countries, selected_tab):
         return dcc.Graph(figure=fig)
 
 # =============================================
-# Run the App
+# Run App
 # =============================================
 if __name__ == "__main__":
     app.run(debug=False)
