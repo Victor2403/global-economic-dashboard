@@ -95,6 +95,23 @@ app.layout = html.Div(
             style={"fontSize": "18px"},
         ),
         html.Div(id="graph-container"),
+        html.Div(
+        style={"marginTop": "40px", "backgroundColor": "#f9f9f9", "padding": "30px", "borderRadius": "10px"},
+        children=[
+            html.H2("🧭 How to Use This Dashboard", style={"fontFamily": "Georgia", "color": "#003300"}),
+            html.P("Select up to three countries from the dropdown menu above to compare economic indicators. Use the tabs to view GDP, Inflation, Unemployment, or a 5-year GDP Forecast using the ARIMA model.", 
+                   style={"fontSize": "16px", "lineHeight": "1.6"}),
+
+            html.H2("🌍 Countries Available for Comparison", style={"fontFamily": "Georgia", "color": "#003300", "marginTop": "30px"}),
+            html.P("Australia, Brazil, Canada, China, France, Germany, India, Japan, United Kingdom, United States", 
+                   style={"fontSize": "16px", "lineHeight": "1.6"}),
+
+            html.H2("📈 About the Forecast Model", style={"fontFamily": "Georgia", "color": "#003300", "marginTop": "30px"}),
+            html.P("The GDP Forecast tab uses an ARIMA model to project economic growth for the next five years based on historical trends. Forecast trendlines appear in green, while all historical data lines are red for easy contrast.", 
+                   style={"fontSize": "16px", "lineHeight": "1.6"}),
+        ],
+    ),
+
     ],
 )
 
