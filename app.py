@@ -128,27 +128,118 @@ app.layout = html.Div(
             html.Button("Download Current Data as CSV", id="btn_csv"),
             dcc.Download(id="download-dataframe-csv"),
         ], style={"marginTop": "20px", "textAlign": "center"}),
-        html.Div(
-            style={"marginTop": "40px", "backgroundColor": "#f9f9f9", "padding": "30px", "borderRadius": "10px"},
-            children=[
-                html.H2("📊 Dashboard Features & Technical Implementation", style={"fontFamily": "Georgia", "color": "#003300"}),
-                html.Ul([
-                    html.Li("Multi-country economic indicator comparison (GDP, Inflation, Unemployment)"),
-                    html.Li("ARIMA time-series forecasting model with 5-year GDP projections"),
-                    html.Li("Interactive visualizations built with Plotly and Dash"),
-                    html.Li("Data export functionality for further analysis"),
-                    html.Li("Responsive design with error handling and input validation")
-                ], style={"lineHeight": "1.8"}),
-                
-                html.H2("🔧 Technical Stack", style={"fontFamily": "Georgia", "color": "#003300", "marginTop": "30px"}),
-                html.P("Python, Dash, Plotly, Pandas, Statsmodels, ARIMA Modeling, Data Visualization, Time-Series Analysis", 
-                       style={"fontSize": "16px", "lineHeight": "1.6"}),
-                
-                html.H2("📈 Key Economic Indicators", style={"fontFamily": "Georgia", "color": "#003300", "marginTop": "30px"}),
-                html.P("Analyzes and visualizes three critical macroeconomic indicators across 10+ countries with historical context and predictive insights.", 
-                       style={"fontSize": "16px", "lineHeight": "1.6"}),
-            ],
-        ),
+        
+        # Enhanced floating info blocks with shadow effects
+        html.Div([
+            # Feature Block
+            html.Div(
+                style={
+                    "marginTop": "40px",
+                    "backgroundColor": "#f9f9f9",
+                    "padding": "25px",
+                    "borderRadius": "10px",
+                    "boxShadow": "0 10px 20px rgba(0,0,0,0.1)",
+                    "marginBottom": "30px"
+                },
+                children=[
+                    html.H2("📊 Dashboard Features & Technical Implementation", 
+                           style={"fontFamily": "Georgia", "color": "#003300", "borderBottom": "2px solid #003300", "paddingBottom": "10px"}),
+                    html.Ul([
+                        html.Li("Multi-country economic indicator comparison (GDP, Inflation, Unemployment)", 
+                               style={"margin": "15px 0", "color": "#333333"}),
+                        html.Li("ARIMA time-series forecasting model with 5-year GDP projections", 
+                               style={"margin": "15px 0", "color": "#333333"}),
+                        html.Li("Interactive visualizations built with Plotly and Dash", 
+                               style={"margin": "15px 0", "color": "#333333"}),
+                        html.Li("Data export functionality for further analysis", 
+                               style={"margin": "15px 0", "color": "#333333"}),
+                        html.Li("Responsive design with error handling and input validation", 
+                               style={"margin": "15px 0", "color": "#333333"})
+                    ], style={"lineHeight": "1.8", "paddingLeft": "20px"})
+                ]
+            ),
+            
+            # Technical Stack Block
+            html.Div(
+                style={
+                    "backgroundColor": "#f9f9f9",
+                    "padding": "25px",
+                    "borderRadius": "10px",
+                    "boxShadow": "0 10px 20px rgba(0,0,0,0.1)",
+                    "marginBottom": "30px"
+                },
+                children=[
+                    html.H2("🔧 Technical Stack", 
+                           style={"fontFamily": "Georgia", "color": "#003300", "borderBottom": "2px solid #003300", "paddingBottom": "10px"}),
+                    html.Div([
+                        html.Span("Python", style={"display": "inline-block", "backgroundColor": "#3776AB", "color": "white", "padding": "5px 10px", "margin": "5px", "borderRadius": "5px"}),
+                        html.Span("Dash", style={"display": "inline-block", "backgroundColor": "#6E5894", "color": "white", "padding": "5px 10px", "margin": "5px", "borderRadius": "5px"}),
+                        html.Span("Plotly", style={"display": "inline-block", "backgroundColor": "#3F4F75", "color": "white", "padding": "5px 10px", "margin": "5px", "borderRadius": "5px"}),
+                        html.Span("Pandas", style={"display": "inline-block", "backgroundColor": "#150458", "color": "white", "padding": "5px 10px", "margin": "5px", "borderRadius": "5px"}),
+                        html.Span("ARIMA", style={"display": "inline-block", "backgroundColor": "#D62728", "color": "white", "padding": "5px 10px", "margin": "5px", "borderRadius": "5px"}),
+                        html.Span("Data Visualization", style={"display": "inline-block", "backgroundColor": "#FF7F0E", "color": "white", "padding": "5px 10px", "margin": "5px", "borderRadius": "5px"}),
+                        html.Span("Time-Series Analysis", style={"display": "inline-block", "backgroundColor": "#2CA02C", "color": "white", "padding": "5px 10px", "margin": "5px", "borderRadius": "5px"})
+                    ], style={"marginTop": "15px"})
+                ]
+            ),
+            
+            # Indicators Block
+            html.Div(
+                style={
+                    "backgroundColor": "#f9f9f9",
+                    "padding": "25px",
+                    "borderRadius": "10px",
+                    "boxShadow": "0 10px 20px rgba(0,0,0,0.1)"
+                },
+                children=[
+                    html.H2("📈 Key Economic Indicators", 
+                           style={"fontFamily": "Georgia", "color": "#003300", "borderBottom": "2px solid #003300", "paddingBottom": "10px"}),
+                    html.P("This dashboard analyzes and visualizes three critical macroeconomic indicators across multiple countries:", 
+                           style={"color": "#333333", "marginTop": "15px"}),
+                    html.Div([
+                        html.Div(
+                            style={
+                                "backgroundColor": "#4CAF50",
+                                "padding": "15px",
+                                "borderRadius": "5px",
+                                "margin": "10px 0",
+                                "boxShadow": "0 4px 8px rgba(0,0,0,0.1)"
+                            },
+                            children=[
+                                html.H3("GDP (USD)", style={"color": "white", "margin": "0"}),
+                                html.P("Gross Domestic Product - measures national economic performance", style={"color": "#E0E0E0", "margin": "5px 0 0"})
+                            ]
+                        ),
+                        html.Div(
+                            style={
+                                "backgroundColor": "#FF9800",
+                                "padding": "15px",
+                                "borderRadius": "5px",
+                                "margin": "10px 0",
+                                "boxShadow": "0 4px 8px rgba(0,0,0,0.1)"
+                            },
+                            children=[
+                                html.H3("Inflation (%)", style={"color": "white", "margin": "0"}),
+                                html.P("Annual price level changes - critical for monetary policy", style={"color": "#E0E0E0", "margin": "5px 0 0"})
+                            ]
+                        ),
+                        html.Div(
+                            style={
+                                "backgroundColor": "#2196F3",
+                                "padding": "15px",
+                                "borderRadius": "5px",
+                                "margin": "10px 0",
+                                "boxShadow": "0 4px 8px rgba(0,0,0,0.1)"
+                            },
+                            children=[
+                                html.H3("Unemployment (%)", style={"color": "white", "margin": "0"}),
+                                html.P("Labor market health indicator - key for social policies", style={"color": "#E0E0E0", "margin": "5px 0 0"})
+                            ]
+                        )
+                    ])
+                ]
+            )
+        ])
     ]
 )
 
@@ -249,7 +340,6 @@ def download_data(n_clicks, selected_countries, selected_tab):
         return None
         
     if selected_tab == "forecast":
-        # For forecast tab, combine historical and forecast data
         country_data = df[df["Country"] == selected_countries[0]]
         forecast_years, forecast_values = forecast_gdp(country_data)
         if forecast_years:
@@ -263,7 +353,6 @@ def download_data(n_clicks, selected_countries, selected_tab):
             combined_df = pd.concat([historical_df, forecast_df])
             return dcc.send_data_frame(combined_df.to_csv, "economic_forecast.csv")
     else:
-        # For other tabs, return filtered data
         metric = {
             "gdp": "GDP (USD)",
             "inflation": "Inflation (%)",
