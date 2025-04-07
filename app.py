@@ -77,20 +77,32 @@ def forecast_gdp(country_data, forecast_periods=5):
 app.layout = html.Div(
     style={"backgroundColor": "#ffffff", "padding": "20px", "fontFamily": "Arial, sans-serif"},
     children=[
-        html.H1(
-            "Global Economic Intelligence Dashboard",
+        # Header with black lines
+        html.Div(
             style={
-                "fontFamily": "Escrow, serif",
-                "fontSize": "48px",
-                "fontWeight": "300",
-                "color": "#003300",
-                "textAlign": "left",
-                "marginBottom": "20px",
-                "letterSpacing": "0.5px",
-                "lineHeight": "1.2",
-                "textTransform": "uppercase"
-            }
+                "borderTop": "6px solid #06402B",
+                "borderBottom": "6px solid #06402B",
+                "padding": "20px 0",
+                "marginBottom": "20px"
+            },
+            children=[
+                html.H1(
+                    "Global Economic Intelligence Dashboard",
+                    style={
+                        "fontFamily": "Escrow, serif",
+                        "fontSize": "50px",
+                        "fontWeight": "300",
+                        "color": "#06402B",
+                        "textAlign": "left",
+                        "margin": "0",
+                        "letterSpacing": "0.5px",
+                        "lineHeight": "1.2",
+                        "textTransform": "uppercase"
+                    }
+                )
+            ]
         ),
+        
         html.Div(
             [
                 dcc.Dropdown(
@@ -112,6 +124,7 @@ app.layout = html.Div(
             ],
             style={"textAlign": "center", "marginBottom": "20px"},
         ),
+        
         dcc.Tabs(
             id="tabs",
             value="gdp",
@@ -123,7 +136,9 @@ app.layout = html.Div(
             ],
             style={"fontSize": "18px"},
         ),
+        
         html.Div(id="graph-container"),
+        
         html.Div([
             html.Button("Download Current Data as CSV", id="btn_csv"),
             dcc.Download(id="download-dataframe-csv"),
