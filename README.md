@@ -1,32 +1,50 @@
-# 🌍 Real-Time Global Economic Dashboard
+# 🌍 Global Economic Intelligence Dashboard
 
-This project is an interactive dashboard that tracks key **economic indicators** (GDP, inflation, employment) in real-time using **World Bank data**. It automates data extraction, stores it in a database, and provides a front-end dashboard for visualization. 
+**An interactive dashboard for economic analysis with ARIMA forecasting**  
+*Visualizing GDP, inflation, and unemployment trends using World Bank data*
 
-## 🚀 Features
-- Fetches **real-time economic data** from the World Bank API.
-- Stores data in a **PostgreSQL database** for analysis.
-- Provides an **API (FastAPI)** for querying economic indicators.
-- Visualizes data with **Streamlit and Plotly**.
-- Deployable on **AWS/GCP** for live access.
+[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://python.org)
+[![Dash](https://img.shields.io/badge/Dash-2.0%2B-FF69B4)](https://dash.plotly.com)
+[![ARIMA](https://img.shields.io/badge/Forecasting-ARIMA-yellowgreen)](https://www.statsmodels.org/stable/generated/statsmodels.tsa.arima.model.ARIMA.html)
 
-## 🏗️ Tech Stack
-- **Python** – Data processing and API integration.
-- **FastAPI** – Backend API for economic data.
-- **PostgreSQL** – Data storage for efficient querying.
-- **Streamlit** – Interactive dashboard for visualization.
-- **Plotly** – Graphing and charting library.
-- **AWS/GCP** – Cloud deployment for live accessibility.
+## 🚀 Key Features
+✔ **Multi-Country Economic Analysis**  
+- Compare GDP, inflation, and unemployment across 40+ countries  
+- Dynamic time-series visualizations (1990-present)  
 
-## 📌 Project Roadmap
-### ✅ Phase 1: Data Ingestion
-- [ ] Fetch real-time economic data from the **World Bank API**.
-- [ ] Store the data in a **PostgreSQL database**.
+✔ **Predictive Analytics**  
+- ARIMA-based GDP forecasting (5-year projections)  
+- Automated data validation and error handling  
 
-### ✅ Phase 2: Backend API
-- [ ] Develop a **FastAPI backend** to expose economic data via endpoints.
+✔ **Interactive Dashboard**  
+- Country-specific color coding for trends  
+- Responsive filters and exportable CSV data  
+- Professional UI with floating info cards  
 
-### ✅ Phase 3: Frontend Dashboard
-- [ ] Build a **Streamlit dashboard** for visualization.
+✔ **Optimized Data Pipeline**  
+- Efficient CSV data handling with Pandas  
+- Cached forecasting results for performance  
 
-### ✅ Phase 4: Deployment
-- [ ] Deploy on **AWS/GCP** for public access.
+## 🛠️ Tech Stack
+**Core Technologies**:
+- **Python** (Pandas, NumPy, StatsModels)
+- **Dash** (Interactive web framework)
+- **Plotly** (Advanced visualizations)
+- **ARIMA** (Time-series forecasting)
+
+**Key Libraries**:
+- `statsmodels` for econometric modeling
+- `dash-core-components` for UI elements
+- `base64` for data export functionality
+
+## 📊 How It Works
+1. **Data Loading**:  
+   - Reads economic indicators from `economic_data.csv`
+   - Automatically cleans and preprocesses time-series data
+
+2. **Forecasting Engine**:  
+   ```python
+   def forecast_gdp(country_data):
+       # ARIMA modeling with (1,1,1) order
+       model = ARIMA(ts, order=(1, 1, 1))
+       return model.forecast(steps=5)
