@@ -12,8 +12,8 @@ import io
 # =============================================
 # DATA PIPELINE: LOADING AND PREPROCESSING
 # =============================================
-# Load and clean economic data from CSV, converting to datetime format
-# and ensuring proper sorting for time-series analysis
+
+# Load and clean economic data from CSV
 df = pd.read_csv("economic_data.csv")
 df['Year'] = pd.to_datetime(df['Year'], format='%Y')  # Convert to datetime
 df = df.sort_values(['Country', 'Year'])
@@ -24,17 +24,32 @@ countries = df["Country"].unique()
 # Assign visually distinct colors to each country for consistent visualization
 color_palette = [
     "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
-    "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
+    "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
+    "#0D3B66", "#F95738", "#43BCCD", "#8338EC", "#FF006E",
+    "#FB5607", "#3A86FF", "#007F5F", "#B388EB", "#6A0572"
 ]
-country_colors = {country: color_palette[i % len(color_palette)] for i, country in enumerate(countries)}
 
-# Initialize Dash application with modern styling
+# Colors for initial countries
+country_colors = {
+    "United States": "#1f77b4",  # Blue
+    "China": "#e41a1c",          # Red
+    "Brazil": "#FFC300",         # Yellow
+    "Japan": "#FF85C0",          # Pink
+    
+    # Default colors for other countries
+    **{country: color_palette[i % len(color_palette)] 
+       for i, country in enumerate(sorted(countries)) 
+       if country not in ["United States", "China", "Brazil", "Japan"]}
+}
+
+# Initialize Dash app.
 app = dash.Dash(__name__)
-server = app.server  # Required for deployment
+server = app.server  
 
 # =============================================
 # PREDICTIVE ANALYTICS: ARIMA FORECASTING ENGINE
 # =============================================
+
 def forecast_gdp(country_data, forecast_periods=5):
     """
     Advanced time-series forecasting using ARIMA (AutoRegressive Integrated Moving Average)
@@ -51,11 +66,11 @@ def forecast_gdp(country_data, forecast_periods=5):
         # Convert to time-series with explicit yearly frequency
         ts = country_data.set_index('Year')['GDP (USD)'].asfreq('YS')
         
-        # Validate we have sufficient historical data for meaningful forecasting
+        # Validate sufficient historical data for meaningful forecasting
         if len(ts) < 5:
             raise ValueError("Insufficient data points for forecasting")
             
-        # Fit ARIMA model with (p,d,q) parameters - optimized for economic data
+        # Fit ARIMA model with (p,d,q) parameters
         model = ARIMA(ts, order=(1, 1, 1))
         model_fit = model.fit()
         
@@ -65,8 +80,8 @@ def forecast_gdp(country_data, forecast_periods=5):
         # Generate future year labels
         last_year = ts.index[-1].year
         forecast_years = [last_year + i for i in range(1, forecast_periods + 1)]
-        
         return forecast_years, forecast.values
+    
     except Exception as e:
         print(f"Forecast failed for {country_data['Country'].iloc[0]}: {str(e)}")
         return None, None
@@ -74,10 +89,10 @@ def forecast_gdp(country_data, forecast_periods=5):
 # =============================================
 # INTERACTIVE DASHBOARD LAYOUT
 # =============================================
+
 app.layout = html.Div(
     style={"backgroundColor": "#ffffff", "padding": "20px", "fontFamily": "Arial, sans-serif"},
     children=[
-        # Header with black lines
         html.Div(
             style={
                 "borderTop": "6px solid #06402B",
@@ -261,10 +276,12 @@ app.layout = html.Div(
 # =============================================
 # CORE INTERACTIVITY & DATA PROCESSING
 # =============================================
+
 @app.callback(
     Output("graph-container", "children"),
     [Input("country-dropdown", "value"), Input("tabs", "value")],
 )
+
 def update_graph(selected_countries, selected_tab):
     """Dynamic visualization generator handling all dashboard interactivity"""
     if not selected_countries:
@@ -324,6 +341,7 @@ def update_graph(selected_countries, selected_tab):
             name=f"{primary_country} Historical", 
             line={"color": country_colors[primary_country], "width": 3}
         ))
+
         fig.add_trace(go.Scatter(
             x=forecast_years, 
             y=forecast_values, 
@@ -331,6 +349,7 @@ def update_graph(selected_countries, selected_tab):
             name=f"{primary_country} Forecast", 
             line={"color": "#ff0066", "width": 3, "dash": "dash"}
         ))
+
         fig.update_layout(
             title=f"{primary_country} 5-Year GDP Forecast",
             plot_bgcolor="#ffffff",
@@ -338,22 +357,24 @@ def update_graph(selected_countries, selected_tab):
             xaxis={"title": "Year"},
             yaxis={"title": "GDP (USD)"},
         )
+
         return dcc.Graph(figure=fig)
 
 # =============================================
 # DATA EXPORT FUNCTIONALITY
 # =============================================
+
 @app.callback(
     Output("download-dataframe-csv", "data"),
     [Input("btn_csv", "n_clicks")],
     [State("country-dropdown", "value"), State("tabs", "value")],
     prevent_initial_call=True
 )
+
 def download_data(n_clicks, selected_countries, selected_tab):
     """Generates CSV export of currently displayed data"""
     if not selected_countries:
         return None
-        
     if selected_tab == "forecast":
         country_data = df[df["Country"] == selected_countries[0]]
         forecast_years, forecast_values = forecast_gdp(country_data)
@@ -380,5 +401,6 @@ def download_data(n_clicks, selected_countries, selected_tab):
 # =============================================
 # APPLICATION DEPLOYMENT
 # =============================================
+
 if __name__ == "__main__":
     app.run(debug=False)

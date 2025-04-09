@@ -10,7 +10,7 @@ print("Files in directory:", os.listdir())
 
 BASE_URL = "https://api.worldbank.org/v2/country/{}/indicator/{}?format=json"
 
-# 🌍 Expanded list of countries (You can always add more)
+# 🌍 List of countries
 COUNTRIES = [
     "USA", "CAN", "GBR", "FRA", "DEU", "JPN", "CHN", "IND", "BRA", "AUS",
     "MEX", "RUS", "ITA", "ESP", "KOR", "IDN", "ZAF", "NGA", "EGY", "ARG"
@@ -23,7 +23,7 @@ INDICATORS = {
     "Unemployment (%)": "SL.UEM.TOTL.ZS"
 }
 
-# 🛡 Setup retry logic to handle API request failures
+# Retry logic to handle API request failures
 session = requests.Session()
 retries = Retry(total=3, backoff_factor=0.3, status_forcelist=[500, 502, 503, 504])
 adapter = HTTPAdapter(max_retries=retries)
@@ -71,7 +71,7 @@ def fetch_economic_data(countries=COUNTRIES, indicators=INDICATORS):
 
     return records
 
-# Main execution
+# Main
 print("\n🚀 Starting data fetch...")
 try:
     economic_data = fetch_economic_data()
@@ -80,18 +80,18 @@ try:
     if economic_data:
         df = pd.DataFrame(economic_data)
 
-        # 🛠 Pivot to structure data by country, year
+        # Pivot to structure data by country, year
         df = df.pivot_table(index=["Country", "Country Code", "Year"], values=list(INDICATORS.keys()), aggfunc="first").reset_index()
 
-        # ✅ Drop any duplicates just in case
+        # Drop duplicates (if any)
         df = df.drop_duplicates(subset=["Country", "Year"])
 
-        # 💾 Save to CSV
+        # Save to CSV
         csv_path = "economic_data.csv"
         df.to_csv(csv_path, index=False)
         print(f"✅ Saved {len(df)} rows to {os.path.abspath(csv_path)}")
 
-        # 🧪 Preview sample rows
+        # Preview sample rows
         print("\n📌 Sample of final data:")
         print(df.head(10))
 
