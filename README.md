@@ -52,23 +52,22 @@
 ## 📊 Steps to run
 
 1. Set up the Virtual environment
-
-# Create the environment
-python -m venv venv
-   # Activate it
-   # Windows:
-   venv\Scripts\activate
-   # macOS/Linux:
-   source venv/bin/activate
+- Create the environment
+        python -m venv venv
+   - Activate it
+   - Windows:
+         venv\Scripts\activate
+   - macOS/Linux:
+         source venv/bin/activate
 
 2. Install dependencies
-pip install dash pandas plotly statsmodels
+      pip install dash pandas plotly statsmodels
 
 3. Download data. 
-# Economic data_csv should be in the same folder as app.py
-# if not, run fetch_data.py
+      - Economic data_csv should be in the same folder as app.py
+      - if not, run fetch_data.py
 
 4. Launch the Dashboard
-python app.py
-# wait for msg. "Dash is running on http://127.0.0.1:8050/"
-# open browser to location
+      python app.py
+   - wait for msg. "Dash is running on http://127.0.0.1:8050/"
+   - open browser to location
