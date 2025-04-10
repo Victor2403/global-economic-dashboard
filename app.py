@@ -102,7 +102,7 @@ app.layout = html.Div(
             },
             children=[
                 html.H1(
-                    "Global Economic Intelligence Dashboard",
+                    "Global Economic Dashboard",
                     style={
                         "fontFamily": "Escrow, serif",
                         "fontSize": "50px",
